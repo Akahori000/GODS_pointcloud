@@ -1,0 +1,20 @@
+{
+	"name": "Python GODS_pointcloud",
+	// Dockerfileでイメージ・コンテナを作成
+	"dockerFile": "Dockerfile",
+	// リモート先のVS Codeにインストールする拡張機能
+	"extensions": [
+		"ms-python.python"
+	],
+	
+	//"remoteUser": "vscode",
+	"workspaceMount": "source=/../home/akahori/GODS_pointcloud,target=/workspace,type=bind",
+	"workspaceFolder": "/workspace",
+	"mounts": [
+		"source=/../mnt/share/akahori/shapenet,target=/workspace/data,type=bind,consistency=cached"
+	  ],
+	"runArgs":[
+		//"--gpus=all" //"--gpus=4"だとなぜか0-4のgpuが並ぶんだが…'"device=0,1"'も"device=0,1"もダメ。
+		"--gpus", "device=5"
+	]
+}

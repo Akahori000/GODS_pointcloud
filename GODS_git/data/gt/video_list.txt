@@ -1,0 +1,2 @@
+./data/generated_poses/01_normal/20180209150250_044.avi
+./data/generated_poses/01_normal/20180209150250_047.avi
