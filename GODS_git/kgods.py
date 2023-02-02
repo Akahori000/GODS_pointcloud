@@ -28,6 +28,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, f1_score, precision_recall_fscore_support
 from sklearn.metrics.pairwise import chi2_kernel
 from scipy.spatial.distance import cdist
+import get_features as getf
 
 seed = 123
 print('seed=%d'%(seed))
@@ -48,21 +49,24 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    # Data prepare
-    with open(os.path.join(args.embed_path, 'data_train' + str(args.split_num) + '.pkl'), 'rb') as handle:
-        data_tr = pickle.load(handle, encoding='latin1')
-    with open(os.path.join(args.embed_path, 'data_test' + str(args.split_num) + '.pkl'), 'rb') as handle:
-        data_va_n = pickle.load(handle, encoding='latin1')
+    data_tr, label_tr, data_va, label_va= getf.pcd_data_get()
+    print(data_va.shape, label_va.shape, data_tr.shape, label_tr.shape)
+
+    # # Data prepare
+    # with open(os.path.join(args.embed_path, 'data_train' + str(args.split_num) + '.pkl'), 'rb') as handle:
+    #     data_tr = pickle.load(handle, encoding='latin1')
+    # with open(os.path.join(args.embed_path, 'data_test' + str(args.split_num) + '.pkl'), 'rb') as handle:
+    #     data_va_n = pickle.load(handle, encoding='latin1')
     
-    # select part of the training set as normal data for testing. We will use all of the negative data for testing. 
-    random.seed(seed)
-    index = random.sample(range(0, data_tr.shape[0]), data_va_n.shape[0] - 2)    
-    data_va_p = np.array([data_tr[i, :] for i in range(data_tr.shape[0]) if i in index])
-    data_tr = np.array([data_tr[i, :] for i in range(data_tr.shape[0]) if i not in index])
-    data_va = np.concatenate((data_va_n, data_va_p), axis=0)
-    label_va = np.ones((data_va.shape[0],), dtype=int)
-    label_va[:data_va.shape[0] // 2] = 0
-    label_tr = np.ones((data_tr.shape[0],), dtype=int)
+    # # select part of the training set as normal data for testing. We will use all of the negative data for testing. 
+    # random.seed(seed)
+    # index = random.sample(range(0, data_tr.shape[0]), data_va_n.shape[0] - 2)    
+    # data_va_p = np.array([data_tr[i, :] for i in range(data_tr.shape[0]) if i in index])
+    # data_tr = np.array([data_tr[i, :] for i in range(data_tr.shape[0]) if i not in index])
+    # data_va = np.concatenate((data_va_n, data_va_p), axis=0)
+    # label_va = np.ones((data_va.shape[0],), dtype=int)
+    # label_va[:data_va.shape[0] // 2] = 0
+    # label_tr = np.ones((data_tr.shape[0],), dtype=int)
     
     # data normalization. Make the embedded features unit norm.
     if not args.unnormalize:
@@ -152,6 +156,7 @@ if __name__ == "__main__":
             else:
                 label.append(0)
                 
+        print("predicted_label", label)       
         accuracy = accuracy_score(label_gt, label)
         F1 = f1_score(label_gt, label)        
         precision, recall, fbeta_score, support = precision_recall_fscore_support(label_gt, label)
@@ -180,7 +185,7 @@ if __name__ == "__main__":
     accu_va, F1, precision, recall = calculate_accruacy(Xopt, data_va, label_va)    
     print('split status')
     print('-------------------')
-    print('num train = %d \n num test = %d \n num test normal = num test abnormal = %d\n' % (data_tr.shape[0], data_va.shape[0], data_va_n.shape[0]-1))
+    #print('num train = %d \n num test = %d \n num test normal = num test abnormal = %d\n' % (data_tr.shape[0], data_va.shape[0], data_va_n.shape[0]-1))
     print('-------------------')
     print('Training accuracy is %.2f' % (accu_tr))
     print('Test Evaluation:')    
