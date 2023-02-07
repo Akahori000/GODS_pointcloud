@@ -4,32 +4,60 @@ import sys
 
     
 class get_ftr():
-    def __init__(self, Anomaly_class: int):
-        self.names = ['bookshelf', 'laptop', 'knife', 'train', 'motorbike', 'guitar', 'faucet']
-        self.folder_names_test = ["180", "184", "170", "156", "134", "320", "298"]
+    def __init__(self, Anomaly_class: int, objset=2):
 
-        self.Anomaly_class = Anomaly_class
-        self.CLASS_NUM = 7
-        self.args = sys.argv
-        self.Anomaly_object = self.names[self.Anomaly_class]                                 # args[1]
-        #Anomaly_object = 'airplane'                                            # ←ここでobject指定すること!
-        self.test_folder = "c_epoc_299_data" + self.folder_names_test[self.Anomaly_class]    #args[2]
-        #test_folder = 'c_epoc_299_data576' #←例
-        self.test_way = "test" #args[3]
-        #val test
-        self.dic_folder = "c_epoc_299_data2521" #args[4]
-        #dic_folder = 'c_epoc_299_data2521' #←例
+        
+        if objset == 2:
+            self.names = ['bookshelf', 'laptop', 'knife', 'train', 'motorbike', 'guitar', 'faucet']
+            self.folder_names_test = ["180", "184", "170", "156", "134", "320", "298"]
+
+            self.Anomaly_class = Anomaly_class
+            self.CLASS_NUM = 7
+            self.args = sys.argv
+            self.Anomaly_object = self.names[self.Anomaly_class]                                 # args[1]
+            #Anomaly_object = 'airplane'                                            # ←ここでobject指定すること!
+            self.test_folder = "c_epoc_299_data" + self.folder_names_test[self.Anomaly_class]    #args[2]
+            #test_folder = 'c_epoc_299_data576' #←例
+            self.test_way = "test" #args[3]
+            #val test
+            self.dic_folder = "c_epoc_299_data2521" #args[4]
+            #dic_folder = 'c_epoc_299_data2521' #←例
 
 
-        self.dictionary_dir =  '../data/objset2/calculated_features/modelAE_' + self.Anomaly_object + '/both_features/' + self.dic_folder + '/'
-        self.test_dir = '../data/objset2/calculated_features/modelAE_' + self.Anomaly_object + '/both_features/' + self.test_folder + '/'
+            self.dictionary_dir =  '../data/objset2/calculated_features/modelAE_' + self.Anomaly_object + '/both_features/' + self.dic_folder + '/'
+            self.test_dir = '../data/objset2/calculated_features/modelAE_' + self.Anomaly_object + '/both_features/' + self.test_folder + '/'
 
-        self.dic_names = {'317': 'bookshelf', '322': 'laptop', '297':'knife', '272':'train', '236':'motorbike', '557': 'guitar', '520': 'faucet'}
-        if self.test_way == 'test':
-            self.dic_names_test = {'90': 'bookshelf', '92': 'laptop', '85':'knife', '78':'train', '67':'motorbike', '160': 'guitar', '149': 'faucet'}
-        else:
-            self.dic_names_test = {'45': 'bookshelf', '46': 'laptop', '42':'knife', '39':'train', '34':'motorbike', '80': 'guitar', '75': 'faucet'} # val用
+            self.dic_names = {'317': 'bookshelf', '322': 'laptop', '297':'knife', '272':'train', '236':'motorbike', '557': 'guitar', '520': 'faucet'}
+            if self.test_way == 'test':
+                self.dic_names_test = {'90': 'bookshelf', '92': 'laptop', '85':'knife', '78':'train', '67':'motorbike', '160': 'guitar', '149': 'faucet'}
+            else:
+                self.dic_names_test = {'45': 'bookshelf', '46': 'laptop', '42':'knife', '39':'train', '34':'motorbike', '80': 'guitar', '75': 'faucet'} # val用
+        
+        elif objset == 3:
+            self.names = ['lamp', 'chair', 'table', 'car', 'sofa', 'rifle', 'airplane', 'bookshelf', 'laptop', 'knife', 'train', 'motorbike', 'guitar', 'faucet']
+            self.folder_names_test = ["928", "756", "616", "280", "508", "404", "576", "180", "184", "170", "156", "134", "320", "298"]
 
+            self.Anomaly_class = Anomaly_class
+            self.CLASS_NUM = 14
+            self.args = sys.argv
+            self.Anomaly_object = self.names[self.Anomaly_class]                                 # args[1]
+            #Anomaly_object = 'airplane'                                            # ←ここでobject指定すること!
+            self.test_folder = "c_epoc_299_data" + self.folder_names_test[self.Anomaly_class]    #args[2]
+            #test_folder = 'c_epoc_299_data576' #←例
+            self.test_way = "test" #args[3]
+            #val test
+            self.dic_folder = "c_epoc_299_data9640" #args[4]
+            #dic_folder = 'c_epoc_299_data2521' #←例
+
+
+            self.dictionary_dir =  '../data/objset3/calculated_features_all/modelAE_' + self.Anomaly_object + '/both_features/' + self.dic_folder + '/'
+            self.test_dir = '../data/objset3/calculated_features_all/modelAE_' + self.Anomaly_object + '/both_features/' + self.test_folder + '/'
+
+            self.dic_names = {'1622': 'lamp', '1323': 'chair', '1078':'table', '490':'car', '890':'sofa', '709': 'rifle', '1007': 'airplane', '317': 'bookshelf', '322': 'laptop', '297':'knife', '272':'train', '236':'motorbike', '557': 'guitar', '520': 'faucet'}
+            if self.test_way == 'test':
+                self.dic_names_test = {'464': 'lamp', '378': 'chair', '308':'table', '140':'car', '254':'sofa', '202': 'rifle', '288': 'airplane', '90': 'bookshelf', '92': 'laptop', '85':'knife', '78':'train', '67':'motorbike', '160': 'guitar', '149': 'faucet'}
+            else:
+                self.dic_names_test = {'232': 'lamp', '189': 'chair', '154':'table', '70':'car', '127':'sofa', '102': 'rifle', '144': 'airplane', '45': 'bookshelf', '46': 'laptop', '42':'knife', '39':'train', '34':'motorbike', '80': 'guitar', '75': 'faucet'} # val用
 
     def get_features_and_sort_onlymu(self, dir):
         names = pd.read_csv(dir + 'name.csv')

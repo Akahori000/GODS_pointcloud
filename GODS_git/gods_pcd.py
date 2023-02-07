@@ -92,7 +92,10 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', action="store_true", help='echo some messages regarding status of the program.')
     args = parser.parse_args()
 
-    dir = "/workspace/result/GODS/L=" + str(args.L) + " eta=" + str(args.eta) + "/"
+    dir = "/workspace/data/objset3/calculated_features_all/GODS/GODS/L=" + str(args.L) + " eta=" + str(args.eta) + "/"
+
+    if not os.path.exists(dir):
+        os.makedirs(dir)
 
     # Data prepare
     # pdb.set_trace()
@@ -221,11 +224,15 @@ if __name__ == "__main__":
         
         return ftr_roc_auc #accuracy, F1, precision, recall
 
+    fld = dir + str(args.num_subspaces) + "/"
+    if not os.path.exists(fld):
+        os.makedirs(fld)
+
     result = np.zeros((7,1))
     tr_accuracy = np.zeros((7,1))
     for num in range(1):
         for anomalycls in range(0,7):
-            gt = getf.get_ftr(anomalycls)
+            gt = getf.get_ftr(anomalycls, objset=3)
             data_tr, label_tr, data_va, label_va, anomaly_object = gt.pcd_data_get()
             print(data_va.shape, label_va.shape, data_tr.shape, label_tr.shape)
 
@@ -277,9 +284,10 @@ if __name__ == "__main__":
             #print('Test Evaluation:')    
             #print('Testing accuracy is %.2f' % (accu_va), '\nF1 score is %.2f ' % (F1), '\n Precision (abnormal samples) = %.2f ' % (precision[0]), '\n Recall (abnormal samples) =  %.2f' % (recall[0]))
     print(result)
+
     df = pd.DataFrame(result)
-    df.to_csv(dir + str(args.num_subspaces) + "/auc_" + "_subdim_" + str(args.num_subspaces) + ".csv")
-    print(result)
+    df.to_csv(fld + "auc_" + "_subdim_" + str(args.num_subspaces) + ".csv")
+    
     df1 = pd.DataFrame(tr_accuracy)
-    df1.to_csv(dir + str(args.num_subspaces) + "/train_accuracy_" + "_subdim_" + str(args.num_subspaces) + ".csv")
+    df1.to_csv(fld + "train_accuracy_" + "_subdim_" + str(args.num_subspaces) + ".csv")
     
