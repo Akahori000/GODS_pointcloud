@@ -196,7 +196,7 @@ if __name__ == "__main__":
     tr_accuracy = np.zeros((7,1))
     for num in range(1):
         for anomalycls in range(0,7):
-            gt = getf.get_ftr(anomalycls)
+            gt = getf.get_ftr(anomalycls, objset=3)
             data_tr, label_tr, data_va, label_va, anomaly_object = gt.pcd_data_get()
             print(data_va.shape, label_va.shape, data_tr.shape, label_tr.shape)
             
