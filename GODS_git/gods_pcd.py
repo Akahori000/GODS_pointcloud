@@ -92,6 +92,8 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', action="store_true", help='echo some messages regarding status of the program.')
     args = parser.parse_args()
 
+    dir = "/workspace/result/GODS/L=" + str(args.L) + " eta=" + str(args.eta) + "/"
+
     # Data prepare
     # pdb.set_trace()
     # with open(os.path.join(args.embed_path, 'data_train' + str(args.split_num) + '.pkl'), 'rb') as handle:
@@ -158,7 +160,7 @@ if __name__ == "__main__":
         cls0 = []
         cls1 = []
         thresh_arr = []
-        for j in range(-120, 120, 1):
+        for j in range(-400, 400, 1):
             thresh = j*0.001
             thresh_arr.append(round(thresh,4))
             label = []
@@ -213,7 +215,7 @@ if __name__ == "__main__":
             plt.xlabel('FPR: False Positive Rate', fontsize = 13)
             plt.ylabel('TPR: True Positive Rate', fontsize = 13)
             plt.grid()
-            plt.savefig("/workspace/result/GODS/" + str(k) + "/auc_" + anomaly_object + "_subdim_" + str(k) + "_auc_" + str(round(ftr_roc_auc,3)) + ".png")
+            plt.savefig(dir + str(k) + "/auc_" + anomaly_object + "_subdim_" + str(k) + "_auc_" + str(round(ftr_roc_auc,3)) + ".png")
         
         
         
@@ -276,8 +278,8 @@ if __name__ == "__main__":
             #print('Testing accuracy is %.2f' % (accu_va), '\nF1 score is %.2f ' % (F1), '\n Precision (abnormal samples) = %.2f ' % (precision[0]), '\n Recall (abnormal samples) =  %.2f' % (recall[0]))
     print(result)
     df = pd.DataFrame(result)
-    df.to_csv("/workspace/result/GODS/" + str(args.num_subspaces) + "/auc_" + "_subdim_" + str(args.num_subspaces) + ".csv")
+    df.to_csv(dir + str(args.num_subspaces) + "/auc_" + "_subdim_" + str(args.num_subspaces) + ".csv")
     print(result)
     df1 = pd.DataFrame(tr_accuracy)
-    df1.to_csv("/workspace/result/GODS/" + str(args.num_subspaces) + "/train_accuracy_" + "_subdim_" + str(args.num_subspaces) + ".csv")
+    df1.to_csv(dir + str(args.num_subspaces) + "/train_accuracy_" + "_subdim_" + str(args.num_subspaces) + ".csv")
     
